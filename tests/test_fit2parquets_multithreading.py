@@ -1,7 +1,5 @@
 # Test that the fit2parquets function works with multithreading
 
-import os
-import shutil
 from multiprocessing import Pool
 
 import polars as pl
@@ -26,9 +24,9 @@ def test_parse_fit_file_in_alternate_location_multithreaded():
         assert len(df) > 0
 
 
-# Clean up all the parquet files created during testing.
-def teardown_module():
-    for fit_file in FIT_FILES:
-        folder = fit_file.replace(".fit", "")
-        if os.path.exists(folder):
-            shutil.rmtree(folder)
+# # Clean up all the parquet files created during testing.
+# def teardown_module():
+#     for fit_file in FIT_FILES:
+#         folder = fit_file.replace(".fit", "")
+#         if os.path.exists(folder):
+#             shutil.rmtree(folder)
