@@ -7,8 +7,8 @@ import pytest
 from fit2parquets import fit2parquets
 
 FIT_FILES = [
-    "tests/data/Afternoon_Run.fit",
     "tests/data/Rund_um_den_Allendorfer_Bahnhof.fit",
+    "tests/data/Afternoon_Run.fit",
 ]
 ALTERNATE_PATH = "tests/data2"
 
