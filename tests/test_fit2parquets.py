@@ -1,4 +1,5 @@
 import os
+import shutil
 
 import polars as pl
 import pytest
@@ -34,11 +35,11 @@ def test_parse_fit_file_in_modified_location(fit_file):
     assert len(df) > 0
 
 
-# # Clean up all the parquet files created during testing.
-# def teardown_module():
-#     for fit_file in FIT_FILES:
-#         folder = fit_file.replace(".fit", "")
-#         if os.path.exists(folder):
-#             shutil.rmtree(folder)
-#     if os.path.exists(ALTERNATE_PATH):
-#         shutil.rmtree(ALTERNATE_PATH)
+# Clean up all the parquet files created during testing.
+def teardown_module():
+    for fit_file in FIT_FILES:
+        folder = fit_file.replace(".fit", "")
+        if os.path.exists(folder):
+            shutil.rmtree(folder)
+    if os.path.exists(ALTERNATE_PATH):
+        shutil.rmtree(ALTERNATE_PATH)
