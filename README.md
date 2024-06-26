@@ -18,7 +18,7 @@ from fit2parquets import fit2parquets
 fit2parquets("Afternoon_Run.fit")
 ```
 
-If you want to save the parsed `.parquet` files in a different location (e.g. `some_other_folder`), simply run
+If you want to save the parsed `.parquet` files in a different location (e.g. `some_other_folder`), simply run:
 
 ```python
 fit2parquets(
