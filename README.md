@@ -8,6 +8,8 @@ Convert Garmin `.fit` files to `.parquet` files using Garmin's FIT SDK.
 poetry add fit2parquets
 ```
 
+Available on PyPI [here](https://pypi.org/project/fit2parquets/).
+
 ## Usage
 
 ```python
