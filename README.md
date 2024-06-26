@@ -24,4 +24,6 @@ df = pl.read_parquet("Afternoon_Run/record_mesgs.parquet")
 
 Garmin's FIT SDK is licensed under the [Flexible and Interoperable Data Transfer (FIT) Protocol](https://developer.garmin.com/fit/download/).
 
+The Python implementation of that SDK is found here: https://github.com/garmin/fit-python-sdk.
+
 This package was created with [`cookiecutter`](https://github.com/audreyr/cookiecutter) and [`thomascamminady/cookiecutter-pypackage`](https://github.com/thomascamminady/cookiecutter-pypackage), a fork of [`audreyr/cookiecutter-pypackage`](https://github.com/audreyr/cookiecutter-pypackage).
