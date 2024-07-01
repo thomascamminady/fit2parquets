@@ -17,7 +17,7 @@ pyarrow = "^16.1.0"
 
 
 [tool.poetry.group.dev.dependencies]
-ruff = "^0.4.9"
+ruff = "^0.5.0"
 mypy = "^1.10.0"
 isort = "^5.13.2"
 pyclean = "^3.0.0"
