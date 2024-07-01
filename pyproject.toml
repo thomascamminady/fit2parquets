@@ -12,7 +12,7 @@ documentation = "https://thomascamminady.github.io/fit2parquets"
 [tool.poetry.dependencies]
 python = ">=3.10,<3.13"
 garmin-fit-sdk = "^21.141.0"
-polars = "^0.20.31"
+polars = "^1.0.0"
 pyarrow = "^16.1.0"
 
 
