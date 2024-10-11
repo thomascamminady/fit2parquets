@@ -28,6 +28,12 @@ fit2parquets(
 )
 ```
 
+This is also as available as a script from the command line directly
+```bash
+fit2parquets Afternoon_Run.fit --output_format=csv
+```
+
+
 You can read the resulting data via e.g.:
 
 ```python
