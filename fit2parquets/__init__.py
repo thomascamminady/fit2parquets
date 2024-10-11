@@ -3,8 +3,9 @@
 """
 
 import os
-from typing import Any, TypeVar
+from typing import Any, Literal, TypeVar
 
+import fire
 import polars as pl
 from garmin_fit_sdk import Decoder, Stream
 
@@ -17,6 +18,7 @@ def fit2parquets(
     fit_file: str,
     write_to_folder_in_which_fit_file_lives: bool = True,
     alternate_folder_path: str = "",
+    output_format: Literal["parquet", "csv"] = "parquet",
 ) -> None:
     """
     Converts a .fit file to a set of parquet files.
@@ -29,6 +31,8 @@ def fit2parquets(
         If True, writes the parquet files to the same folder as the .fit file, by default True.
     alternate_folder_path : str, optional
         The path to the folder where the parquet files will be written, by default "".
+    output_format : Literal["parquet", "csv"], optional
+        We do also allow to output the data as csv files, by default "parquet".
 
     Raises
     ------
@@ -55,7 +59,17 @@ def fit2parquets(
 
     # Write each dataframe to a parquet file.
     for key, value in df_dict.items():
-        value.write_parquet(os.path.join(folder, f"""{key}.parquet"""))
+        try:
+            if output_format == "parquet":
+                value.write_parquet(os.path.join(folder, f"""{key}.parquet"""))
+            elif output_format == "csv":
+                value.write_csv(os.path.join(folder, f"""{key}.csv"""))
+            else:
+                raise ValueError(
+                    "output_format must be either 'parquet' or 'csv'."
+                )
+        except Exception as e:
+            pass
 
 
 def _read_fit_file(
@@ -113,3 +127,11 @@ def _resolve_path(
     if not os.path.exists(folder):
         os.makedirs(folder)
     return folder
+
+
+def main() -> None:
+    fire.Fire(fit2parquets)
+
+
+if __name__ == "__main__":
+    main()

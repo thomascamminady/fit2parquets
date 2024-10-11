@@ -11,26 +11,37 @@ FIT_FILES = [
     "tests/data/Afternoon_Run.fit",
 ]
 ALTERNATE_PATH = "tests/data2"
+FORMATS = ["parquet", "csv"]
 
-
+@pytest.mark.parametrize("ending", FORMATS)
 @pytest.mark.parametrize("fit_file", FIT_FILES)
-def test_parse_fit_file_in_original_location(fit_file):
-    fit2parquets(fit_file)
+def test_parse_fit_file_in_original_location(fit_file, ending):
+    fit2parquets(fit_file, output_format=ending)
 
-    df = pl.read_parquet(fit_file.replace(".fit", "") + "/record_mesgs.parquet")
+    if ending=="parquet":
+        df = pl.read_parquet(fit_file.replace(".fit", "") + "/record_mesgs.parquet")
+    else:
+        df = pl.read_csv(fit_file.replace(".fit", "") + "/record_mesgs.csv")
+
     assert isinstance(df, pl.DataFrame)
     assert len(df) > 0
 
 
 @pytest.mark.parametrize("fit_file", FIT_FILES)
-def test_parse_fit_file_in_modified_location(fit_file):
+@pytest.mark.parametrize("ending", FORMATS)
+def test_parse_fit_file_in_modified_location(fit_file, ending):
     fit2parquets(
         fit_file,
         write_to_folder_in_which_fit_file_lives=False,
         alternate_folder_path=f"{ALTERNATE_PATH}/{os.path.basename(fit_file).replace('.fit','')}",
+        output_format = ending
     )
 
-    df = pl.read_parquet(fit_file.replace(".fit", "") + "/record_mesgs.parquet")
+
+    if ending=="parquet":
+        df = pl.read_parquet(fit_file.replace(".fit", "") + "/record_mesgs.parquet")
+    else:
+        df = pl.read_csv(fit_file.replace(".fit", "") + "/record_mesgs.csv")
     assert isinstance(df, pl.DataFrame)
     assert len(df) > 0
 
