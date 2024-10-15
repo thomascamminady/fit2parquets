@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "fit2parquets"
-version = "0.3.0"
+version = "0.4.0"
 description = ""
 authors = ["Thomas Camminady <0milieux_member@icloud.com>"]
 readme = "README.md"
@@ -12,9 +12,8 @@ documentation = "https://thomascamminady.github.io/fit2parquets"
 [tool.poetry.dependencies]
 python = ">=3.10,<3.13"
 garmin-fit-sdk = "^21.141.0"
-polars = "^1.0.0"
-pyarrow = "^17.0.0"
 fire = "^0.7.0"
+polars = "^1.9.0"
 
 
 [tool.poetry.group.dev.dependencies]
