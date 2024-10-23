@@ -17,7 +17,7 @@ polars = "^1.9.0"
 
 
 [tool.poetry.group.dev.dependencies]
-ruff = "^0.6.1"
+ruff = "^0.7.0"
 mypy = "^1.10.0"
 isort = "^5.13.2"
 pyclean = "^3.0.0"
