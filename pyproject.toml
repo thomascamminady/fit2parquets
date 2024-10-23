@@ -29,6 +29,7 @@ rich = "^13.7.1"
 regex = "^2024.5.15"
 pylint = "^3.2.5"
 
+
 [tool.poetry.scripts]
 fit2parquets = "fit2parquets.__init__:main"
 
