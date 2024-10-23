@@ -30,6 +30,10 @@ regex = "^2024.5.15"
 pylint = "^3.2.5"
 
 
+
+[tool.poetry.group.vis.dependencies]
+bokeh = "^3.6.0"
+
 [tool.poetry.scripts]
 fit2parquets = "fit2parquets.__init__:main"
 
