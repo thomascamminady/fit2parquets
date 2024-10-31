@@ -126,7 +126,7 @@ class Parser:
             try:
                 df_dict[key] = pl.DataFrame(Parser._dictkeys2str(value))
             except Exception as e:
-                logger.info(key, e)
+                logger.info(e)
         return df_dict
 
     @staticmethod
