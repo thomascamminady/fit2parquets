@@ -17,6 +17,7 @@ class Parser:
         write_to_folder_in_which_fit_file_lives: bool = True,
         alternate_folder_path: str = "",
         output_format: Literal["parquet", "csv"] = "parquet",
+        hive: bool = False,
     ) -> None:
         """
         Converts a .fit file to a set of parquet or CSV files.
@@ -31,6 +32,8 @@ class Parser:
             The path to the folder where the output files will be written, by default "".
         output_format : Literal["parquet", "csv"], optional
             The format of the output files, by default "parquet".
+        hive:  bool, optional
+            Whether or not to write the output in a hive compatible format, by default False.
 
         Raises
         ------
@@ -54,12 +57,23 @@ class Parser:
             fit_file=fit_file,
             write_to_folder_in_which_fit_file_lives=write_to_folder_in_which_fit_file_lives,
             alternate_folder_path=alternate_folder_path,
+            hive=hive,
         )
 
         # Write each dataframe to a parquet or CSV file.
         for key, value in df_dict.items():
             try:
-                destination = os.path.join(folder, f"""{key}.{output_format}""")
+                if hive:
+                    subfolder = os.path.join(folder, f"message={key}")
+                    if not os.path.exists(subfolder):
+                        os.makedirs(subfolder)
+                    file = f"""message={key}/data.{output_format}"""
+
+                else:
+                    file = f"""{key}.{output_format}"""
+
+                destination = os.path.join(folder, file)
+
                 if output_format == "parquet":
                     value.write_parquet(destination)
                 elif output_format == "csv":
@@ -151,8 +165,9 @@ class Parser:
     @staticmethod
     def _resolve_path(
         fit_file: str,
-        write_to_folder_in_which_fit_file_lives: bool = True,
-        alternate_folder_path: str = "",
+        write_to_folder_in_which_fit_file_lives: bool,
+        alternate_folder_path: str,
+        hive: bool,
     ) -> str:
         """
         Resolves the output folder path based on the input parameters.
@@ -161,10 +176,12 @@ class Parser:
         ----------
         fit_file : str
             The path to the .fit file.
-        write_to_folder_in_which_fit_file_lives : bool, optional
-            If True, writes the output files to the same folder as the .fit file, by default True.
-        alternate_folder_path : str, optional
-            The path to the folder where the output files will be written, by default "".
+        write_to_folder_in_which_fit_file_lives : bool
+            If True, writes the output files to the same folder as the .fit file.
+        alternate_folder_path : str
+            The path to the folder where the output files will be written.
+        hive:  bool
+            Whether or not to write the output in a hive compatible format.
 
         Returns
         -------
@@ -186,6 +203,13 @@ class Parser:
         else:
             # Writes to the folder specified by the user.
             folder = alternate_folder_path
+
+        if hive:
+            # Prepend "file=" to the basename of the folder.
+            basename = os.path.basename(folder)
+            everything_but_basename = os.path.dirname(folder)
+            folder = os.path.join(everything_but_basename, f"file={basename}")
+
         # If folder does not exist, create it.
         if not os.path.exists(folder):
             os.makedirs(folder)

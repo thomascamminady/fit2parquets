@@ -54,11 +54,30 @@ def test_parse_fit_file_in_modified_location(fit_file, ending):
     assert len(df) > 0
 
 
+@pytest.mark.parametrize("ending", FORMATS)
+@pytest.mark.parametrize("fit_file", FIT_FILES)
+def test_parse_fit_file_in_original_location_but_with_hive(fit_file, ending):
+    Parser.fit2parquets(fit_file, output_format=ending, hive=True)
+
+    base = "tests/data/file=" + os.path.basename(fit_file).replace(".fit", "")
+
+    if ending == "parquet":
+        df = pl.read_parquet(base + f"/message=record_mesgs/data.{ending}")
+    else:
+        df = pl.read_csv(base + f"/message=record_mesgs/data.{ending}")
+
+    assert isinstance(df, pl.DataFrame)
+    assert len(df) > 0
+
+
 # Clean up all the parquet files created during testing.
 def teardown_module():
     for fit_file in FIT_FILES:
         folder = fit_file.replace(".fit", "")
         if os.path.exists(folder):
             shutil.rmtree(folder)
+        hivefolder = folder.replace("data/", "data/file=")
+        if os.path.exists(hivefolder):
+            shutil.rmtree(hivefolder)
     if os.path.exists(ALTERNATE_PATH):
         shutil.rmtree(ALTERNATE_PATH)
