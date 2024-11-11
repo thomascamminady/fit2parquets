@@ -1,6 +1,6 @@
 # fit2parquets
 
-Convert Garmin `.fit` files to `.parquet` files using Garmin's FIT SDK.
+Convert Garmin `.fit` files to `.parquet` files using Garmin's FIT SDK and `polars`.
 
 ## Installation
 
