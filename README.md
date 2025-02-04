@@ -14,14 +14,14 @@ Available on PyPI [here](https://pypi.org/project/fit2parquets/).
 
 ```python
 
-from fit2parquets import fit2parquets
-fit2parquets("Afternoon_Run.fit")
+from fit2parquets.parser import Parser
+Parser().fit2parquets("Afternoon_Run.fit")
 ```
 
 If you want to save the parsed `.parquet` files in a different location (e.g. `some_other_folder`), simply run:
 
 ```python
-fit2parquets(
+Parser().fit2parquets(
     "Afternoon_Run.fit",
     write_to_folder_in_which_fit_file_lives=False,
     alternate_folder_path="some_other_folder",
