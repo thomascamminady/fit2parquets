@@ -20,7 +20,7 @@ rich = "^13.9.4"
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.9.4"
 mypy = "^1.10.0"
-isort = "^5.13.2"
+isort = "^6.0.0"
 pyclean = "^3.0.0"
 pre-commit = "^4.0.0"
 ipykernel = "^6.29.4"
